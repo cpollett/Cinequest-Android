@@ -62,117 +62,7 @@ public class CinequestActivity extends Activity
 	 * @param listItems the list items
 	 * @param isChecked a function to determine when to check a checkbox, or null for no checkboxes
 	 * @param listener the listener for checkboxes, or null for no checkboxes
-	 * @return the list adapter
-	 */
-
-	/*protected ListAdapter createScheduleList(List<Schedule> listItems) {
-		if (listItems.size() == 0) {
-			return new SeparatedListAdapter(this);
-		}
-		SeparatedListIndexedAdapter adapter  = new SeparatedListIndexedAdapter(this);
-
-
-		TreeMap<String, ArrayList<Schedule>> filmsMap 
-		= new TreeMap<String, ArrayList<Schedule>>();
-
-		for(Schedule s : listItems) {
-			String day = s.getStartTime().substring(0, 10);
-
-			if (!filmsMap.containsKey(day))
-				filmsMap.put(day, new ArrayList<Schedule>());
-			filmsMap.get(day).add(s);
-		}
-
-		DateUtils du = new DateUtils();
-		for (String day : filmsMap.keySet()) { 
-			ArrayList<Schedule> filmsForDay = filmsMap.get(day); 			
-			String header = du.format(day, DateUtils.DATE_DEFAULT); 			
-			String key = du.format(day, DateUtils.DAY_ONLY); 			
-			adapter.addSection(header, key, new ScheduleListAdapter(this, filmsForDay));
-		}
-		return adapter;
-	}
-	 */
-	//protected ListAdapter createFilmletList(List<? extends Filmlet> listItems) {
-	protected ListAdapter createFilmletList(List<? extends CommonItem> listItems) {		
-		if (listItems.size() == 0) {
-			return new SeparatedListAdapter(this);
-		} 
-
-		SeparatedListIndexedAdapter adapter = new SeparatedListIndexedAdapter(this);
-		TreeMap<String, ArrayList<CommonItem>> filmsTitleMap 
-		= new TreeMap<String, ArrayList<CommonItem>>();
-		String titleInitial = "";
-		for (CommonItem f : listItems) {
-			titleInitial = getTitleInitial(f.getTitle(), titleInitial);
-
-			if (!filmsTitleMap.containsKey(titleInitial))
-				filmsTitleMap.put(titleInitial, new ArrayList<CommonItem>());
-			filmsTitleMap.get(titleInitial).add(f);
-		}
-
-		for (String titleInit : filmsTitleMap.keySet()) { 
-			adapter.addSection(
-					titleInit, titleInit,	
-					new FilmletListAdapter(this, filmsTitleMap.get(titleInit)));
-		}		
-		return adapter;
-	}
-
-	private static String getTitleInitial(String title, String previousInitial) {
-		String ucTitle = title.toUpperCase();
-		if (ucTitle.startsWith("A ") || ucTitle.startsWith("AN ") || ucTitle.startsWith("THE "))
-			ucTitle = ucTitle.substring(ucTitle.indexOf(' ') + 1);
-		String initial = ucTitle.substring(0,1);
-		if (initial.compareTo(previousInitial) < 0) Platform.getInstance().log("Didn't expect " + title + " after section " + previousInitial);
-		return initial;
-	}
-
-	/**
-	 * An adapter for a list of schedule items. These lists occur (1) in the Films tab 
-	 * (when sorted by date), Events and Forums tabs, (2) in each film detail,
-	 * and (3) in the Schedule tab.
-	 */
-	protected  class ScheduleListAdapter extends ArrayAdapter<Schedule> {
-		private static final int RESOURCE_ID = R.layout.listitem_titletimevenue;
-		private DateUtils du = new DateUtils();
-		boolean is24HourFormat=android.text.format.DateFormat.is24HourFormat(getContext());
-
-		public ScheduleListAdapter(Context context, List<Schedule> list) 
-		{
-			super(context, RESOURCE_ID, list);
-		}
-
-		@Override
-		public View getView(int position, View v, ViewGroup parent) {            
-			if (v == null) {
-				LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				v = inflater.inflate(RESOURCE_ID, null);
-			}
-
-			TextView title = (TextView) v.findViewById(R.id.titletext);
-			TextView time = (TextView) v.findViewById(R.id.timetext);
-			TextView venue = (TextView) v.findViewById(R.id.venuetext);
-			//CheckBox checkbox = (CheckBox) v.findViewById(R.id.myschedule_checkbox);
-			Button button = (Button) v.findViewById(R.id.myschedule_checkbox);	                
-			final Schedule result = getItem(position);            
-			title.setText(result.getTitle());	                 
-			if (result.isSpecialItem())
-				title.setTypeface(null, Typeface.ITALIC);			
-			String startTime = du.format(result.getStartTime(), DateUtils.TIME_SHORT);        	
-			String endTime = du.format(result.getEndTime(), DateUtils.TIME_SHORT);
-			if(!is24HourFormat)
-			{
-				startTime=du.formatTime(startTime);
-				if (startTime.length()==7) startTime="0"+startTime;
-				endTime=du.formatTime(endTime);
-				if (endTime.length()==7) endTime="0"+endTime;
-			}
-			time.setText("Time: " + startTime + " - " + endTime);
-			venue.setText("Venue: " + result.getVenue());
-			formatContents(v, title, time, venue, du, result);		        
-			button.setTag(result);
-			button.setText("-");
+	 	button.setText("-");
 			populateCalendarID();
 			configureCalendarIcon(v, button, result);
 			Button directions = (Button) v.findViewById(R.id.directionsURL);
@@ -366,64 +256,7 @@ public class CinequestActivity extends Activity
 					else{
 						ContentValues l_event = new ContentValues();
 						l_event.put("calendar_id", m_selectedCalendarId);
-						l_event.put("title", s.getTitle());
-						l_event.put("description", s.getTitle());
-						l_event.put("eventLocation", s.getVenue());
-						//l_event.put("dtstart", System.currentTimeMillis());
-						//l_event.put("dtend", System.currentTimeMillis() + 1800*1000);
-						l_event.put("dtstart", begin);
-						l_event.put("dtend", end);
-						l_event.put("allDay", 0);
-						//status: 0~ tentative; 1~ confirmed; 2~ canceled
-						l_event.put("eventStatus", 1);
-						//0~ default; 1~ confidential; 2~ private; 3~ public
-						//l_event.put("visibility", 1);
-						//0~ opaque, no timing conflict is allowed; 1~ transparency, allow overlap of scheduling
-						//l_event.put("transparency", 0);
-						//0~ false; 1~ true
-						l_event.put("hasAlarm", 1);
-						l_event.put("eventTimezone", TimeZone.getDefault().getID());
-						Uri l_eventUri;
-						if (Build.VERSION.SDK_INT >= 8) {
-							l_eventUri = Uri.parse("content://com.android.calendar/events");
-						} else {
-							//Calendar code for API level < 8, needs lot of testing. 
-							//May be some of the paramters (that we are populating above), have different naming conventions in different API Levels
-							l_eventUri = Uri.parse("content://calendar/events");
-						}
-						try{
-							Uri l_uri = getContentResolver().insert(l_eventUri, l_event);
-							Toast toast = Toast.makeText(getContext(), "Event added to calendar", Toast.LENGTH_SHORT);
-							toast.show();
-							button.setBackgroundResource(R.drawable.incalendar);
-							button.setHint("exists");
-						}
-						catch (Exception e){
-							Log.i("CinequestActivity:configureCalendarIcon","Error while adding Events in Calendar");
-						}
-					}
-										
-				}
-
-			});
-
-		}
-	}	
-
-	/**
-	 * An adapter for a list of films. These lists occur (1) in the Films tab 
-	 * (when sorted by name) (2) in the DVDs tab and (3) in the detail view of a
-	 * program item with multiple films.
-	 */
-	protected static class FilmletListAdapter extends ArrayAdapter<CommonItem> {
-		private static final int RESOURCE_ID = R.layout.listitem_title_only;
-
-		public FilmletListAdapter(Context context, List<? extends CommonItem> list) 
-		{
-			super(context, RESOURCE_ID, (List<CommonItem>) list);
-		}
-
-		@Override
+								@Override
 		public View getView(int position, View v, ViewGroup parent) {            
 			if (v == null) {
 				LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -496,7 +329,10 @@ public class CinequestActivity extends Activity
 		}
 
 	}
-	//gets the calendar id for Cinequest 
+
+    /**
+     * Gets the calendar id for Cinequest
+     */
 	public void populateCalendarID(){
 		String[] proj = new String[]{"_id", "calendar_displayName"};			        
 		String calSelection = "(calendar_displayName= ?) ";

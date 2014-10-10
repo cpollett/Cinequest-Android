@@ -107,6 +107,9 @@ public class ScheduleActivity extends Activity {
 		//dtformat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, config.locale);		
 	}
 
+    /**
+     * Populates the schedule
+     */
 	public void populateSchedule()
 	{
 
