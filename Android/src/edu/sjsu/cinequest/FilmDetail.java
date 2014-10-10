@@ -42,6 +42,11 @@ import edu.sjsu.cinequest.comm.Platform;
 import edu.sjsu.cinequest.comm.cinequestitem.CommonItem;
 import edu.sjsu.cinequest.comm.cinequestitem.Schedule;
 
+/**
+ * Displays information about a particular film. Shows buttons
+ * like youtube to search for a trailer, gmail to email about the movie,
+ * and facebook to share.
+ */
 public class FilmDetail extends CinequestActivity {
 	public static enum ItemType {FILM, PROGRAM_ITEM, DVD}
 	private ListView scheduleList;
