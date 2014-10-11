@@ -5,6 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TabHost;
 
+
+/**
+ * This class creates the main container used in the Application. A TabActivity displays a child Activity in
+ * each defined tab. Each of these Activities is defined in its own class. They are loaded here using Intents.
+ * This class has been deprecated since API13. Fragments should be used For API13+ handsets. 
+ * Backwards compatibility for previous versions can be defined in a v4 support library.
+ */
 public class MainTab extends TabActivity {
 
 	public void onCreate(Bundle savedInstanceState) {    	    	
