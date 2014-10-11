@@ -71,6 +71,7 @@ public class AndroidPlatform extends Platform {
 	}
 
 	@Override
+	//converts bytes by decoding byte array
 	// TODO: Give better name to method
 	// Returns an android.graphics.BitMap
 	public Object convert(byte[] bytes) {
@@ -87,6 +88,7 @@ public class AndroidPlatform extends Platform {
 	}
 
 	@Override
+	// parses and throws SAX and io exceptions
 	public void parse(String url, DefaultHandler handler, Callback callback)
 			throws SAXException, IOException {
 		SAXParserFactory spf = SAXParserFactory.newInstance();
@@ -125,7 +127,7 @@ public class AndroidPlatform extends Platform {
 					CallbackException.ERROR);
 		}
 	}
-
+	// gets data from cache
 	private boolean getFromCache(String url, SAXParser sp,
 			DefaultHandler handler, long maxage) throws SAXException,
 			IOException {
@@ -144,6 +146,7 @@ public class AndroidPlatform extends Platform {
 	}
 
 	@Override
+	//parses the string
 	public String parse(String url, Hashtable postData, DefaultHandler handler,
 			Callback callback) throws SAXException, IOException {
 		starting(callback);
@@ -170,6 +173,7 @@ public class AndroidPlatform extends Platform {
 	}
 
 	@Override
+	//checks the callback and runs runnable
 	public void starting(final Callback callback) {
 		if (callback == null)
 			return;
@@ -181,6 +185,7 @@ public class AndroidPlatform extends Platform {
 	}
 
 	@Override
+	//if callback is not null, then run is called.
 	public void invoke(final Callback callback, final Object arg) {
 		if (callback == null)
 			return;
@@ -202,6 +207,7 @@ public class AndroidPlatform extends Platform {
 	}
 
 	@Override
+	//cheks for failure of callback
 	public void failure(final Callback callback, final Throwable arg) {
 		if (callback == null)
 			return;
@@ -229,6 +235,7 @@ public class AndroidPlatform extends Platform {
 	}
 
 	@Override
+	//loads fileinputstream
 	public Object loadPersistentObject(long key) {
 		try {
 			File file = new File(context.getCacheDir(), key + ".ser");
@@ -251,6 +258,7 @@ public class AndroidPlatform extends Platform {
 	}
 
 	@Override
+	//logs messge as 'i' severity
 	public void log(String message) {
 		if (message == null)
 			message = "null";
