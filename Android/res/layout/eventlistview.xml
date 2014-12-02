@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="Large Text"        
+        android:text="Large Text"   
+        android:listSelector="#FF0000"     
         android:textAppearance="?android:attr/textAppearanceMedium" />
     
     <TextView
@@ -25,6 +26,7 @@
         android:layout_alignLeft="@+id/eventName"
         android:layout_below="@+id/eventName"
         android:text=""
+        android:listSelector="#FF0000"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
