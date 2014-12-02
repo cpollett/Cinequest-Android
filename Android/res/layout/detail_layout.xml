@@ -12,7 +12,8 @@
         android:layout_weight="1"
         android:gravity="center_horizontal"
         android:padding="10dp"
-        android:text="" />
+        android:text="" 
+        android:listSelector="#FF0000"/>
 
     <ImageView
         android:id="@+id/Image"
@@ -27,7 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:padding="10dp"
-        android:text="" />
+        android:text="" 
+        android:listSelector="#FF0000"/>
 
     <TextView
         android:id="@+id/SmallImages"
@@ -35,7 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_weight="1"
-        android:text="" />
+        android:text="" 
+        android:listSelector="#FF0000"/>
 
     <TextView
         android:id="@+id/Properties"
@@ -43,7 +46,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:padding="10dp"
-        android:text="" />
+        android:text="" 
+        android:listSelector="#FF0000"/>
 
 
 </LinearLayout>

@@ -19,6 +19,7 @@
         android:layout_gravity="left|top"
         android:layout_marginLeft="10dip"
         android:layout_weight="1"
-        android:textSize="15dip" />	
+        android:textSize="15dip" 
+        android:listSelector="#FF0000"/>	
 
 </LinearLayout>

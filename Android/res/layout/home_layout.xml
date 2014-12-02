@@ -24,7 +24,7 @@
     	android:layout_alignParentLeft="true"
     	android:layout_marginLeft="3dip"
     	android:layout_marginTop="5dip"
-    	    android:visibility="gone"
+    	android:visibility="gone"
 	/>
 	
     <Button
@@ -60,7 +60,8 @@
 		  android:layout_width="fill_parent"
 		  android:layout_height="wrap_content"
 		  android:background="@android:color/transparent" 
-		  android:drawSelectorOnTop="false"		  
+		  android:drawSelectorOnTop="false"		
+		  android:listSelector="#FF0000"  
 	  />
   
 </LinearLayout>
